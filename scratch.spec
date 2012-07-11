@@ -1,15 +1,15 @@
-Name: scratch	
-Version:	1.4.0.6
-Release:	1%{?dist}
-Summary:	Scratch is a programming language that makes it easy to create your own interactive stories, animations, games, music, and art -- and share your creations on the web.
+Name: scratch   
+Version:    1.4.0.6
+Release:    1%{?dist}
+Summary:    Scratch is a programming language that makes it easy to create your own interactive stories, animations, games, music, and art -- and share your creations on the web.
 
-Group:	Development/Tools	
-License:	GPLv2
-URL:		http://scratch.mit.edu/
-Source0:	scratch-%{version}.src.tar.gz
+Group:      Development/Tools   
+License:    GPLv2
+URL:        http://scratch.mit.edu/
+Source0:    http://info.scratch.mit.edu/sites/infoscratch.media.mit.edu/files/file/scratch-%{version}.src.tar.gz
 
-BuildRequires:    libv4l, lib4vl-devel	
-Requires:	squeak
+BuildRequires:  libv4l, lib4vl-devel    
+Requires:   squeak
 
 %description
 
