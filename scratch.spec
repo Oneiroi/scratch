@@ -40,3 +40,5 @@ make install DESTDIR=%{buildroot}
 
 %changelog
 
+* Wed Jul 11 2012 David Busby <oneiroi@fedoraproject.org> - 1.4.0.6-1
+- Initial specification for project; using reference spec:http://subversion.assembla.com/svn/scratchonlinux/trunk/scratch/rpm/SPECS/scratch-1.4.0.1.spec
