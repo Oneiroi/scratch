@@ -8,7 +8,7 @@ License:    GPLv2
 URL:        http://scratch.mit.edu/
 Source0:    http://download.scratch.mit.edu/scratch-%{version}.src.tar.gz
 
-BuildRequires:  libv4l, lib4vl-devel    
+BuildRequires:  libv4l, libv4l-devel    
 Requires:   squeak
 
 %description
