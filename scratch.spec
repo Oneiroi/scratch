@@ -6,7 +6,7 @@ Summary:    Scratch is a programming language that makes it easy to create your 
 Group:      Development/Tools   
 License:    GPLv2
 URL:        http://scratch.mit.edu/
-Source0:    http://info.scratch.mit.edu/sites/infoscratch.media.mit.edu/files/file/scratch-%{version}.src.tar.gz
+Source0:    http://download.scratch.mit.edu/scratch-%{version}.src.tar.gz
 
 BuildRequires:  libv4l, lib4vl-devel    
 Requires:   squeak
