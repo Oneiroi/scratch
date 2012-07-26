@@ -22,11 +22,10 @@ Scratch is developed by the Lifelong Kindergarten Group at the MIT Media Lab, wi
 
 
 %prep
-%setup -q
+%setup -qn %{name}-%{version}.src
 
 
 %build
-%configure
 make %{?_smp_mflags}
 
 
