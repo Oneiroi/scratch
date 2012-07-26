@@ -9,8 +9,8 @@ URL:        http://scratch.mit.edu/
 Source0:    http://download.scratch.mit.edu/%{name}-%{version}.src.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}.src/
 
-BuildRequires:  libv4l, libv4l-devel    
-Requires:   squeak
+BuildRequires:  libv4l, libv4l-devel, pango, pango-devel   
+Requires:   squeak, pango
 
 %description
 
@@ -30,8 +30,7 @@ make %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=%{buildroot}
-
+make build
 
 install -m 755 -d %{buildroot}%{_libdir}/%{name}/App
 install -m 755 %{_builddir}/App/scratch_squeak_vm %{buildroot}%{_libdir}/%{name}/App/
