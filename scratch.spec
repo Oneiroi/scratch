@@ -32,72 +32,73 @@ make %{?_smp_mflags}
 %install
 
 install -m 755 -d %{buildroot}%{_libdir}/%{name}/App
-install -m 755 $RPM_BUILD_DIR/App/scratch_squeak_vm %{buildroot}%{_libdir}/%{name}/App/
-install -m 644 $RPM_BUILD_DIR/Scratch.image %{buildroot}%{_libdir}/%{name}/
-install -m 644 $RPM_BUILD_DIR/Scratch.ini %{buildroot}%{_libdir}/%{name}/
+#install -m 755 App/scratch_squeak_vm %{buildroot}%{_libdir}/%{name}/App/
+install -m 644 Scratch.image %{buildroot}%{_libdir}/%{name}/
+install -m 644 Scratch.ini %{buildroot}%{_libdir}/%{name}/
 install -m 755 -d %{buildroot}%{_libdir}/%{name}/Plugins
-install -m 644 $RPM_BUILD_DIR/Plugins/* %{buildroot}%{_libdir}/%{name}/Plugins/
+install -m 644 Plugins/* %{buildroot}%{_libdir}/%{name}/Plugins/
 
 install -m 755 -d %{buildroot}%{_datadir}/%{name}/Help/en/images
-install -m 644 $RPM_BUILD_DIR/Help/en/*.pdf %{buildroot}%{_datadir}/%{name}/Help/en/
-install -m 644 $RPM_BUILD_DIR/Help/en/*.html %{buildroot}%{_datadir}/%{name}/Help/en/
-install -m 644 $RPM_BUILD_DIR/Help/en/*.gif %{buildroot}%{_datadir}/%{name}/Help/en/
-install -m 644 $RPM_BUILD_DIR/Help/en/images/*.gif %{buildroot}%{_datadir}/%{name}/Help/en/images/
+install -m 644 Help/en/*.pdf %{buildroot}%{_datadir}/%{name}/Help/en/
+install -m 644 Help/en/*.html %{buildroot}%{_datadir}/%{name}/Help/en/
+install -m 644 Help/en/*.gif %{buildroot}%{_datadir}/%{name}/Help/en/
+install -m 644 Help/en/images/*.gif %{buildroot}%{_datadir}/%{name}/Help/en/images/
 
 install -m 755 -d %{buildroot}%{_datadir}/%{name}/locale
-install -m 644 $RPM_BUILD_DIR/locale/* %{buildroot}%{_datadir}/%{name}/locale/
+install -m 644 locale/* %{buildroot}%{_datadir}/%{name}/locale/
 
 cp -R Media  %{buildroot}%{_datadir}/%{name}/
 
 install -m 755 -d %{buildroot}%{_datadir}/%{name}/Projects/Animation
-install -m 644 $RPM_BUILD_DIR/Projects/Animation/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Animation/
+install -m 644 Projects/Animation/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Animation/
 install -m 755 -d %{buildroot}%{_datadir}/%{name}/Projects/Games
-install -m 644 $RPM_BUILD_DIR/Projects/Games/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Games/
+install -m 644 Projects/Games/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Games/
 install -m 755 -d %{buildroot}%{_datadir}/%{name}/Projects/Greetings
-install -m 644 $RPM_BUILD_DIR/Projects/Greetings/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Greetings/
+install -m 644 Projects/Greetings/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Greetings/
 install -m 755 -d %{buildroot}%{_datadir}/%{name}/Projects/Interactive\ Art
-install -m 644 $RPM_BUILD_DIR/Projects/Interactive\ Art/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Interactive\ Art/
+install -m 644 Projects/Interactive\ Art/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Interactive\ Art/
 install -m 755 -d %{buildroot}%{_datadir}/%{name}/Projects/Music\ and\ Dance
-install -m 644 $RPM_BUILD_DIR/Projects/Music\ and\ Dance/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Music\ and\ Dance/
+install -m 644 Projects/Music\ and\ Dance/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Music\ and\ Dance/
 install -m 755 -d %{buildroot}%{_datadir}/%{name}/Projects/Names
-install -m 644 $RPM_BUILD_DIR/Projects/Names/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Names/
+install -m 644 Projects/Names/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Names/
 install -m 755 -d %{buildroot}%{_datadir}/%{name}/Projects/Sensors\ and\ Motors
-install -m 644 $RPM_BUILD_DIR/Projects/Sensors\ and\ Motors/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Sensors\ and\ Motors/
+install -m 644 Projects/Sensors\ and\ Motors/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Sensors\ and\ Motors/
 install -m 755 -d %{buildroot}%{_datadir}/%{name}/Projects/Simulations
-install -m 644 $RPM_BUILD_DIR/Projects/Simulations/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Simulations/
+install -m 644 Projects/Simulations/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Simulations/
 install -m 755 -d %{buildroot}%{_datadir}/%{name}/Projects/Speak\ Up
-install -m 644 $RPM_BUILD_DIR/Projects/Speak\ Up/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Speak\ Up/
+install -m 644 Projects/Speak\ Up/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Speak\ Up/
 install -m 755 -d %{buildroot}%{_datadir}/%{name}/Projects/Stories
-install -m 644 $RPM_BUILD_DIR/Projects/Stories/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Stories/
+install -m 644 Projects/Stories/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Stories/
 
-install -m 644 $RPM_BUILD_DIR/license.txt %{buildroot}%{_datadir}/%{name}/
-install -m 644 $RPM_BUILD_DIR/ACKNOWLEDGEMENTS %{buildroot}%{_datadir}/%{name}/
-install -m 644 $RPM_BUILD_DIR/KNOWN-BUGS %{buildroot}%{_datadir}/%{name}/
+install -m 644 LICENSE %{buildroot}%{_datadir}/%{name}/
+install -m 644 gpl-2.0.txt %{buildroot}%{_datadir}/%{name}/
+install -m 644 ACKNOWLEDGEMENTS %{buildroot}%{_datadir}/%{name}/
+install -m 644 KNOWN-BUGS %{buildroot}%{_datadir}/%{name}/
 
 install -m 755 -d %{buildroot}%{_bindir}/
-install -m 755 $RPM_BUILD_DIR/src/scratch %{buildroot}%{_bindir}/
+install -m 755 src/scratch %{buildroot}%{_bindir}/
 
 install -m 755 -d %{buildroot}%{_mandir}/man1
-install -m 644 $RPM_BUILD_DIR/src/man/scratch.1.gz %{buildroot}%{_mandir}/man1/
-install -m 644 $RPM_BUILD_DIR/src/man/scratch_squeak_vm.1.gz %{buildroot}%{_mandir}/man1/
+install -m 644 src/man/scratch.1.gz %{buildroot}%{_mandir}/man1/
+#install -m 644 src/man/scratch_squeak_vm.1.gz %{buildroot}%{_mandir}/man1/
 
 install -m 755 -d %{buildroot}%{_datadir}/applications
-install -m 644 $RPM_BUILD_DIR/src/%{name}.desktop %{buildroot}%{_datadir}/applications/
+install -m 644 src/%{name}.desktop %{buildroot}%{_datadir}/applications/
 
 install -m 755 -d %{buildroot}%{_datadir}/icons/hicolor/48x48/apps
-install -m 644 $RPM_BUILD_DIR/src/icons/48x48/scratch.png %{buildroot}%{_datadir}/icons/hicolor/48x48/apps/
+install -m 644 src/icons/48x48/scratch.png %{buildroot}%{_datadir}/icons/hicolor/48x48/apps/
 install -m 755 -d %{buildroot}%{_datadir}/icons/hicolor/128x128/apps
-install -m 644 $RPM_BUILD_DIR/src/icons/128x128/scratch.png %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/
+install -m 644 src/icons/128x128/scratch.png %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/
 install -m 755 -d %{buildroot}%{_datadir}/icons/hicolor/48x48/mimetypes
-install -m 644 $RPM_BUILD_DIR/src/icons/48x48/gnome-mime-application-x-scratch-project.png %{buildroot}%{_datadir}/icons/hicolor/48x48/mimetypes/
+install -m 644 src/icons/48x48/gnome-mime-application-x-scratch-project.png %{buildroot}%{_datadir}/icons/hicolor/48x48/mimetypes/
 install -m 755 -d %{buildroot}%{_datadir}/icons/hicolor/128x128/mimetypes
-install -m 644 $RPM_BUILD_DIR/src/icons/128x128/gnome-mime-application-x-scratch-project.png %{buildroot}%{_datadir}/icons/hicolor/128x128/mimetypes/
+install -m 644 src/icons/128x128/gnome-mime-application-x-scratch-project.png %{buildroot}%{_datadir}/icons/hicolor/128x128/mimetypes/
 
 install -m 755 -d %{buildroot}%{_datadir}/mime/packages
-install -m 644 $RPM_BUILD_DIR/src/%{name}.xml %{buildroot}%{_datadir}/mime/packages/
+install -m 644 src/%{name}.xml %{buildroot}%{_datadir}/mime/packages/
 
 %files
-%defattr(-root,root,-)
+%defattr(-,root,root,-)
 %{_bindir}/%{name}
 %{_libdir}/%{name}
 %{_datadir}/%{name}
