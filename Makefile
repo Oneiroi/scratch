@@ -1,5 +1,5 @@
 VERSION = 1.4.0.6
-RELEASE = 1
+RELEASE = 3
 git_head	= $(shell git log -1 --pretty=format:%h)
 date		= $(shell date --utc +%Y%m%d%H%M%S)
 GIT_RELEASE	= $(date)git$(git_head)
