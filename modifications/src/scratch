@@ -10,7 +10,7 @@
 #SQ_DIR=/usr/lib/squeak/$VM_VERSION
 [[ -d "/usr/lib/squeak" ]] && SQ_DIR=/usr/lib/squeak
 [[ -d "/usr/lib64/squeak" ]] && SQ_DIR=/usr/lib64/squeak
-VM="$SQ_DIR/squeak"
+VM="/usr/bin/squeak"
 VMOPTIONS="-encoding UTF-8 -vm-display-x11 -xshm"
 [[ -d "/usr/lib/scratch/Plugins" ]] && VMOPTIONS="${VMOPTIONS} -plugins /usr/lib/scratch/Plugins:$SQ_DIR/"
 [[ -d "/usr/lib/scratch/Plugins" ]] && VMOPTIONS="${VMOPTIONS} -plugins /usr/lib64/scratch/Plugins:$SQ_DIR/"
