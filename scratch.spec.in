@@ -1,6 +1,6 @@
 Name: scratch   
-Version:    1.4.0.6
-Release:    1%{?dist}
+Version:    @VERSION@
+Release:    %{?dist}
 Summary:    Scratch is a programming language that makes it easy to create your own interactive stories, animations, games, music, and art -- and share your creations on the web.
 
 Group:      Development/Tools   
