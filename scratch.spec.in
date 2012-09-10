@@ -116,6 +116,27 @@ install -m 644 src/%{name}.xml %{buildroot}%{_datadir}/mime/packages/
 
 
 %changelog
+* Mon Sep 10 2012 David Busby <oneiroi@fedoraproject.org> - 1.4.0.6-2 
+- af0205b Modified scratch file complete
+- b4f6273 Adding modified sources in their entirity, rpm builds to contain patchs only.
+- edd61d5 Makefile fully functional. README noting known bug with --update on source tar scratch.spec.i
+- 84caa2a scratch.spec.in making CI compatible.
+- 32a2f25 Added makefile in prep for CI compatibility (David Busby <oneiroi@fedoraproject.org>)
 
+* Thu Jul 26 2012 David Busby <oneiroi@fedoraproject.org> - 1.4.0.6-2
+- 3199328 issues with $RPM_BUILD_ROOT, so removed it, assumes releative paths at this time, build completes successfully though no functional
+    Known issues with scratch bash script from src, quick read notes assumption on /usr/lib/ does not allow for /usr/lib64/.
+- 9a463c9 Removal of make build from %install. %{_builddir} != $RPM_BUILD_ROOT
+- 8494d4d Oddly the Makefile does not have an install method, only clean.
+- ff74673 Amended %setup -q to %setup -qn for custom buildroot path, due to .src suffix in upstream tar
+- 8299d2b Reworked Source0: path to correctly utilize %{name}. Also defining buildroot at head of spec
+ 
 * Wed Jul 11 2012 David Busby <oneiroi@fedoraproject.org> - 1.4.0.6-1
+- 5945057 Thought I had corrected this typo once allready
+- c264ec5 Completed porting relevcant lines from reference spec file focusing on working build prior to checking for areas to consolidate lines
+- c6435f9 Updated the Source0 location to one where the source is actually available
+- 99a81a4 README FILE ADDED
+- 4205d8c Removed mix of tabs and spaces, replaced tabs with 4 spaces
+- 0f2df6f Correction to incorrect format of changelog line
+- 6d7bddf began work on writing a new spec file for scratch the original has not been maintained in a long time.
 - Initial specification for project; using reference spec:http://subversion.assembla.com/svn/scratchonlinux/trunk/scratch/rpm/SPECS/scratch-1.4.0.1.spec
