@@ -10,7 +10,7 @@ Source0:    http://download.scratch.mit.edu/%{name}-%{version}.src.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}.src/
 
 BuildRequires:  libv4l, libv4l-devel, pango, pango-devel   
-Requires:   squeak, pango
+Requires:   squeak-vm, pango
 
 %description
 
