@@ -29,4 +29,4 @@ dist-test: test
 	rpmbuild $(RPM_FLAGS) -ta scratch-$(VERSION).src.tar.gz
 
 clean:
-	rm -rf dist scratch-$(VERSION).src.tar.gz scratch.spec
+	rm -rf dist scratch-$(VERSION).src.tar.gz scratch-$(VERSION).src.tar scratch.spec
