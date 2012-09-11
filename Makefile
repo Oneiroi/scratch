@@ -12,7 +12,6 @@ test-spec:
 	sed -e "s|@VERSION@|$(VERSION)|;s|^\(Release:[^%]*\)|\1$(GIT_RELEASE)|" scratch.spec.in > scratch.spec
 
 build:
-	mkdir -p dist/scratch-$(VERSION)
 	$(shell [[ -f "scratch-$(VERSION).src.tar.gz" ]] || ([[ -x "/usr/bin/curl" ]] && /usr/bin/curl -o scratch-$(VERSION).src.tar.gz http://download.scratch.mit.edu/scratch-$(VERSION).src.tar.gz || echo "curl not installed?"))
 	cp -a -r scratch.spec dist/
 	gzip -d scratch-$(VERSION).src.tar.gz
