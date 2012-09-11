@@ -4,6 +4,7 @@ git_head	= $(shell git log -1 --pretty=format:%h)
 date		= $(shell date --utc +%Y%m%d%H%M%S)
 GIT_RELEASE	= $(date)git$(git_head)
 RPMDIR		= $$(rpm --eval '%{_rpmdir}')
+RPM_FLAGS = "--root dist"
 
 dist-spec:
 	sed -e "s|@VERSION@|$(VERSION)|;s|^\(Release:[^%]*\)|\1$(RELEASE)|" scratch.spec.in > scratch.spec
@@ -12,6 +13,7 @@ test-spec:
 	sed -e "s|@VERSION@|$(VERSION)|;s|^\(Release:[^%]*\)|\1$(GIT_RELEASE)|" scratch.spec.in > scratch.spec
 
 build:
+	mkdir dist
 	$(shell [[ -f "scratch-$(VERSION).src.tar.gz" ]] || ([[ -x "/usr/bin/curl" ]] && /usr/bin/curl -o scratch-$(VERSION).src.tar.gz http://download.scratch.mit.edu/scratch-$(VERSION).src.tar.gz || echo "curl not installed?"))
 	cp -a -r scratch.spec dist/
 	gzip -d scratch-$(VERSION).src.tar.gz
