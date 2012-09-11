@@ -4,7 +4,7 @@ git_head	= $(shell git log -1 --pretty=format:%h)
 date		= $(shell date --utc +%Y%m%d%H%M%S)
 GIT_RELEASE	= $(date)git$(git_head)
 RPMDIR		= $$(rpm --eval '%{_rpmdir}')
-RPM_FLAGS = --root $(shell pwd)/dist
+RPM_FLAGS = --root ./dist/
 
 dist-spec:
 	sed -e "s|@VERSION@|$(VERSION)|;s|^\(Release:[^%]*\)|\1$(RELEASE)|" scratch.spec.in > scratch.spec
