@@ -1,0 +1,12 @@
+diff -ur scratch-1.4.0.6.src.pulse/src/scratch scratch-1.4.0.6.src/src/scratch
+--- scratch-1.4.0.6.src.pulse/src/scratch	2012-09-10 15:18:36.224307452 -0400
++++ scratch-1.4.0.6.src/src/scratch	2012-09-10 15:20:51.245559630 -0400
+@@ -86,7 +86,7 @@
+ [ -z "$LC_ALL" ] && export LC_ALL="$LANG"
+ 
+ # if pulseaudio is running, use it. Otherwise fall back to ALSA
+-if pulseaudio --check 2>/dev/null ; then
++if pulseaudio --check 2>/dev/null && [ -e /usr/$VM_LIBARCH/squeak/$VM_VERSION/vm-sound-pulse ] ; then
+     VMOPTIONS="$VMOPTIONS -vm-sound-pulse"
+ else 
+     VMOPTIONS="$VMOPTIONS -vm-sound-ALSA"

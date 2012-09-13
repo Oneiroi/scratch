@@ -1,0 +1,8 @@
+--- scratch-1.4.0.6.src/src/scratch.desktop-semicolon	2012-09-10 13:04:14.075940196 -0400
++++ scratch-1.4.0.6.src/src/scratch.desktop	2012-09-10 13:04:18.345846641 -0400
+@@ -6,4 +6,4 @@
+ Type=Application
+ Icon=scratch
+ Categories=Development;
+-MimeType=application/x-scratch-project
++MimeType=application/x-scratch-project;

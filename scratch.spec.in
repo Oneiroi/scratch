@@ -1,42 +1,180 @@
-Name: scratch   
-Version:    @VERSION@
-Release:    %{?dist}
-Summary:    Scratch is a programming language that makes it easy to create your own interactive stories, animations, games, music, and art -- and share your creations on the web.
+Name:           scratch
+Version:        @VERSION@
+Release:        %{?dist}
+Summary:        Programming language learning environment for stories, games, music and art
 
-Group:      Development/Tools   
-License:    GPLv2
-URL:        http://scratch.mit.edu/
-Source0:    http://download.scratch.mit.edu/%{name}-%{version}.src.tar.gz
-BuildRoot: %{_tmppath}/%{name}-%{version}.src/
+Group:          Development/Languages
+License:        GPLv2, MIT, and CC-BY-SA
+URL:            http://scratch.mit.edu
+#Source0:        http://download.scratch.mit.edu/%{name}-%{version}.src.tar.gz
+# This source file is the above with the MP3 and MIDI binary code removed. Hopefully this
+# will be resolved upstream shortly.
+Source0:        scratch-1.4.0.6.src-sanitized.tar.xz
+Patch0:         scratch-1.4.0.6-use-fedora-squeak.patch
+Patch1:         scratch-1.4.0.6-desktopfile-semicolon.patch
+Patch2:         scratch-1.4.0.6-workaround-missing-pulse-plugin.patch
 
-BuildRequires:  libv4l, libv4l-devel, pango, pango-devel   
-Requires:   squeak-vm, pango
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+
+
+# These are from the README
+BuildRequires: cairo-devel > 1.8.6
+BuildRequires: pango-devel > 1.20.5
+BuildRequires: glib2-devel > 2.20.1
+BuildRequires: libv4l-devel > 0.5.8
+
+Requires:       scratch-image
+Requires:       scratch-squeak-scratchplugin, scratch-squeak-unicodeplugin
+Requires:       scratch-squeak-unicodeplugin
+Requires:       scratch-squeak-cameraplugin, scratch-squeak-wedoplugin
+Requires:       scratch-media, scratch-projects
+Requires:       scratch-help, scratch-i18n
+
+# Fedora doesn't include mp3 support, so including the mp3 files is just
+# confusing. This matches what OLPC does for the XO: 
+# http://wiki.laptop.org/go/Scratch#Media_and_Sample_Project_Download_.28v12_and_earlier.29
+%define include_mp3_sounds 0
 
 %description
+Scratch is a programming language that makes it easy to create your own
+interactive stories, animations, games, music, and art -- and share your
+creations on the web.
 
-Scratch is a programming language that makes it easy to create your own interactive stories, animations, games, music, and art -- and share your creations on the web.
+As young people create and share Scratch projects, they learn important
+mathematical and computational ideas, while also learning to think
+creatively, reason systematically, and work collaboratively.
 
-As young people create and share Scratch projects, they learn important mathematical and computational ideas, while also learning to think creatively, reason systematically, and work collaboratively.
+This package brings in all of the various subpackages which comprise the
+full Scratch distribution.
 
-Scratch is developed by the Lifelong Kindergarten Group at the MIT Media Lab, with financial support from the National Science Foundation, Microsoft, Intel Foundation, MacArthur Foundation, Google, Iomega and MIT Media Lab research consortia.
+
+
+%package squeak-scratchplugin
+Summary: Squeak plugin to enable addition functionality in Scratch
+License: MIT
+
+%description squeak-scratchplugin
+ScratchPlugin is a Squeak plugin (a shared library that extends the Squeak
+VM) written in C that supports image filters, presentation mode, the help
+button, and several other features.  Scratch will not crash without
+ScratchPlugin, but these features will not work. 
+
+
+%package squeak-unicodeplugin
+Summary: Squeak plugin to enable Unicode text rendering in Scratch
+License: MIT
+
+%description squeak-unicodeplugin
+UnicodePlugin is a Squeak plugin that support Unicode text rendering.
+
+
+%package squeak-cameraplugin
+Summary: Squeak plugin to enable a range of webcams in Scratch
+License: MIT
+
+%description squeak-cameraplugin
+The Camera Plugin for Scratch on Linux is designed to work with a wide
+range of USB webcams including those integrated into notebooks.  In most
+cases a webcam should simply work without requiring any further
+configuration.
+
+More at: http://info.scratch.mit.edu/Linux_installer/Linux_Camera_Plug-in
+
+
+%package squeak-wedoplugin
+License: MIT
+Summary: Squeak plugin to enable control of the Lego WeDo robotics kit
+
+%description squeak-wedoplugin
+The Wedo Plugin for Scratch allows scratch to interact with the Lego
+Education WeDo Robotics kit.
+
+More at: http://info.scratch.mit.edu/WeDo
+
+
+%package image
+Summary: The Scratch programming environment
+License: GPLv2
+Requires: squeak-vm
+BuildArch: noarch
+
+%description image
+Scratch is a programming language that makes it easy to create your own
+interactive stories, animations, games, music, and art -- and share your
+creations on the web.
+
+This package contains the core Scratch programming environment.
+
+%package help
+Summary: Documentation for the Scratch programming language
+License: CC-BY-SA
+BuildArch: noarch
+
+%description help
+This package contains HTML and PDF documentation for scratch. The HTML
+documentation is referenced in the Scratch menu, and the PDFs are linked
+from that.
+
+
+%package media
+Summary: The standard distribution of sprites and media for Scratch
+License: CC-BY-SA
+BuildArch: noarch
+
+%description media
+This package contains the standard collection of images and sounds for the
+Scratch programming language.
+
+
+%package projects
+Summary: The standard distribution of Scratch projects
+License: CC-BY-SA
+BuildArch: noarch
+
+%description projects
+This package contains the standard collection of sample projects for the
+Scratch programming language.
+
+
+%package i18n
+Summary: Translations for the Scratch programming environment
+License: GPLv2
+BuildArch: noarch
+
+%description i18n
+This package contains international support for the Scratch programming
+environment. If it is not installed, Scratch will only be available in
+English
 
 
 %prep
-%setup -qn %{name}-%{version}.src
+%setup -q -n %{name}-%{version}.src
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+
+%if ! %{include_mp3_sounds}
+find  Media/Sounds -name '*.mp3' -delete
+%endif
+
 
 
 %build
+export CFLAGS="$RPM_OPT_FLAGS" 
 make %{?_smp_mflags}
 
 
 %install
+rm -rf $RPM_BUILD_ROOT
+install -m 755 -d %{buildroot}%{_datadir}/%{name}
+#install -m 755 -d %{buildroot}%{_libdir}/%{name}/App
+install -m 644 Scratch.image %{buildroot}%{_datadir}/%{name}/
+install -m 644 Scratch.ini %{buildroot}%{_datadir}/%{name}/
 
-install -m 755 -d %{buildroot}%{_libdir}/%{name}/App
-#install -m 755 App/scratch_squeak_vm %{buildroot}%{_libdir}/%{name}/App/
-install -m 644 Scratch.image %{buildroot}%{_libdir}/%{name}/
-install -m 644 Scratch.ini %{buildroot}%{_libdir}/%{name}/
 install -m 755 -d %{buildroot}%{_libdir}/%{name}/Plugins
-install -m 644 Plugins/* %{buildroot}%{_libdir}/%{name}/Plugins/
+for plugin in Camera Scratch Unicode WeDo; do
+  install -m 755 Plugins/so.${plugin}Plugin %{buildroot}%{_libdir}/%{name}/Plugins/${plugin}Plugin
+done
 
 install -m 755 -d %{buildroot}%{_datadir}/%{name}/Help/en/images
 install -m 644 Help/en/*.pdf %{buildroot}%{_datadir}/%{name}/Help/en/
@@ -70,17 +208,11 @@ install -m 644 Projects/Speak\ Up/*.sb %{buildroot}%{_datadir}/%{name}/Projects/
 install -m 755 -d %{buildroot}%{_datadir}/%{name}/Projects/Stories
 install -m 644 Projects/Stories/*.sb %{buildroot}%{_datadir}/%{name}/Projects/Stories/
 
-install -m 644 LICENSE %{buildroot}%{_datadir}/%{name}/
-install -m 644 gpl-2.0.txt %{buildroot}%{_datadir}/%{name}/
-install -m 644 ACKNOWLEDGEMENTS %{buildroot}%{_datadir}/%{name}/
-install -m 644 KNOWN-BUGS %{buildroot}%{_datadir}/%{name}/
-
 install -m 755 -d %{buildroot}%{_bindir}/
 install -m 755 src/scratch %{buildroot}%{_bindir}/
 
 install -m 755 -d %{buildroot}%{_mandir}/man1
 install -m 644 src/man/scratch.1.gz %{buildroot}%{_mandir}/man1/
-#install -m 644 src/man/scratch_squeak_vm.1.gz %{buildroot}%{_mandir}/man1/
 
 install -m 755 -d %{buildroot}%{_datadir}/applications
 install -m 644 src/%{name}.desktop %{buildroot}%{_datadir}/applications/
@@ -97,11 +229,21 @@ install -m 644 src/icons/128x128/gnome-mime-application-x-scratch-project.png %{
 install -m 755 -d %{buildroot}%{_datadir}/mime/packages
 install -m 644 src/%{name}.xml %{buildroot}%{_datadir}/mime/packages/
 
+
+%clean
+rm -rf %{buildroot}
+
 %files
 %defattr(-,root,root,-)
+%doc KNOWN-BUGS ACKNOWLEDGEMENTS LICENSE NOTICE TRADEMARK_POLICY gpl-2.0.txt
+
+%files image
+%defattr(-,root,root,-)
+%doc LICENSE gpl-2.0.txt
 %{_bindir}/%{name}
-%{_libdir}/%{name}
-%{_datadir}/%{name}
+%dir %{_datadir}/%{name}
+%{_datadir}/%{name}/Scratch.image
+%{_datadir}/%{name}/Scratch.ini
 %{_mandir}/man1/%{name}*.1*
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/mime/packages/%{name}.xml
@@ -110,33 +252,105 @@ install -m 644 src/%{name}.xml %{buildroot}%{_datadir}/mime/packages/
 %{_datadir}/icons/hicolor/128x128/apps/*
 %{_datadir}/icons/hicolor/128x128/mimetypes/*
 
+%files squeak-scratchplugin
+%defattr(-,root,root,-)
+%doc LICENSE
+%dir %{_libdir}/%{name}
+%dir %{_libdir}/%{name}/Plugins/
+%{_libdir}/%{name}/Plugins/ScratchPlugin
 
-%doc
+%files squeak-unicodeplugin
+%defattr(-,root,root,-)
+%doc LICENSE
+%dir %{_libdir}/%{name}
+%dir %{_libdir}/%{name}/Plugins/
+%{_libdir}/%{name}/Plugins/UnicodePlugin
 
+%files squeak-cameraplugin
+%defattr(-,root,root,-)
+%doc LICENSE
+%dir %{_libdir}/%{name}
+%dir %{_libdir}/%{name}/Plugins/
+%{_libdir}/%{name}/Plugins/CameraPlugin
 
+%files squeak-wedoplugin
+%defattr(-,root,root,-)
+%doc LICENSE
+%dir %{_libdir}/%{name}
+%dir %{_libdir}/%{name}/Plugins/
+%{_libdir}/%{name}/Plugins/WeDoPlugin
+
+%files help
+%defattr(-,root,root,-)
+%doc LICENSE
+%dir %{_datadir}/%{name}/Help
+%{_datadir}/%{name}/Help/*
+
+%files media
+%defattr(-,root,root,-)
+%doc LICENSE
+%dir %{_datadir}/%{name}/Media
+%{_datadir}/%{name}/Media/*
+
+%files projects
+%defattr(-,root,root,-)
+%doc LICENSE
+%dir %{_datadir}/%{name}/Projects
+%{_datadir}/%{name}/Projects/*
+
+%files i18n
+%defattr(-,root,root,-)
+%doc LICENSE gpl-2.0.txt
+%{_datadir}/%{name}/locale
 
 %changelog
-* Mon Sep 10 2012 David Busby <oneiroi@fedoraproject.org> - 1.4.0.6-2 
-- af0205b Modified scratch file complete
-- b4f6273 Adding modified sources in their entirity, rpm builds to contain patchs only.
-- edd61d5 Makefile fully functional. README noting known bug with --update on source tar scratch.spec.i
-- 84caa2a scratch.spec.in making CI compatible.
-- 32a2f25 Added makefile in prep for CI compatibility (David Busby <oneiroi@fedoraproject.org>)
+* Mon Sep 10 2012 Matthew Miller <mattdm[@]mattdm.org> - 1.4.0.6-15
+- work around possible missing pulse plugin for squeak
 
-* Thu Jul 26 2012 David Busby <oneiroi@fedoraproject.org> - 1.4.0.6-2
-- 3199328 issues with $RPM_BUILD_ROOT, so removed it, assumes releative paths at this time, build completes successfully though no functional
-    Known issues with scratch bash script from src, quick read notes assumption on /usr/lib/ does not allow for /usr/lib64/.
-- 9a463c9 Removal of make build from %install. %{_builddir} != $RPM_BUILD_ROOT
-- 8494d4d Oddly the Makefile does not have an install method, only clean.
-- ff74673 Amended %setup -q to %setup -qn for custom buildroot path, due to .src suffix in upstream tar
-- 8299d2b Reworked Source0: path to correctly utilize %{name}. Also defining buildroot at head of spec
- 
-* Wed Jul 11 2012 David Busby <oneiroi@fedoraproject.org> - 1.4.0.6-1
-- 5945057 Thought I had corrected this typo once allready
-- c264ec5 Completed porting relevcant lines from reference spec file focusing on working build prior to checking for areas to consolidate lines
-- c6435f9 Updated the Source0 location to one where the source is actually available
-- 99a81a4 README FILE ADDED
-- 4205d8c Removed mix of tabs and spaces, replaced tabs with 4 spaces
-- 0f2df6f Correction to incorrect format of changelog line
-- 6d7bddf began work on writing a new spec file for scratch the original has not been maintained in a long time.
-- Initial specification for project; using reference spec:http://subversion.assembla.com/svn/scratchonlinux/trunk/scratch/rpm/SPECS/scratch-1.4.0.1.spec
+* Mon Sep 10 2012 Matthew Miller <mattdm[@]mattdm.org> - 1.4.0.6-14
+- right name for the camera plugin
+
+* Mon Sep 10 2012 Matthew Miller <mattdm[@]mattdm.org> - 1.4.0.6-13
+- license files for all!
+- proper license for different subpackages
+
+* Mon Sep 10 2012 Matthew Miller <mattdm[@]mattdm.org> - 1.4.0.6-12
+- whoops forgot to require the camera plugin
+
+* Mon Sep 10 2012 Matthew Miller <mattdm[@]mattdm.org> - 1.4.0.6-11
+- use santized source file (no included pre-built binaries)
+
+* Mon Sep 10 2012 Matthew Miller <mattdm[@]mattdm.org> - 1.4.0.6-10
+- fix whine about invalid desktop file due to missing ;
+- de-dot the summaries
+
+* Mon Sep 10 2012 Matthew Miller <mattdm[@]mattdm.org> - 1.4.0.6-9
+- missing defattr -- whoops
+- put docs in both image and main wrapper package
+
+* Mon Sep 10 2012 Matthew Miller <mattdm[@]mattdm.org> - 1.4.0.6-8
+- delete mp3s since they won't work without support
+- remove binary plugins in prep stage
+- move more things to noarch subpackages -- now only plugins and
+  main "wrapper" package are arch-specific
+
+* Mon Sep 10 2012 Matthew Miller <mattdm[@]mattdm.org> - 1.4.0.6-7
+- split plugins into subpackages
+- split help and media into subpackages
+
+* Mon Sep 10 2012 Matthew Miller <mattdm[@]mattdm.org> - 1.4.0.6-5
+- remove MIDI plugin, which is part of the main squeak vm package
+- remove MP3 plugin, which is a) a binary in the source distribution,
+  b) missing source, and c) not allowed in Fedora
+
+* Mon Sep 10 2012 Matthew Miller <mattdm[@]mattdm.org> - 1.4.0.6-4
+- update layout to deal with arch issues
+- set cflags; get proper debuginfo packages
+
+* Fri Sep  7 2012 Matthew Miller <mattdm[@]mattdm.org> - 1.4.0.6-1
+- update to gplv2 version
+- tweak source filename and build dir to match upstream
+- update patch to point to system squeak vm
+
+* Mon Jan 17 2011 W. Michael Petullo <mike[@]flyn.org> - 1.4.0.1-1
+- Initial package
