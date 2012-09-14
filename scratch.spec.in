@@ -6,10 +6,7 @@ Summary:        Programming language learning environment for stories, games, mu
 Group:          Development/Languages
 License:        GPLv2, MIT, and CC-BY-SA
 URL:            http://scratch.mit.edu
-#Source0:        http://download.scratch.mit.edu/%{name}-%{version}.src.tar.gz
-# This source file is the above with the MP3 and MIDI binary code removed. Hopefully this
-# will be resolved upstream shortly.
-Source0:        scratch-1.4.0.6.src-sanitized.tar.xz
+Source0:        http://download.scratch.mit.edu/%{name}-%{version}.src.tar.gz
 Patch0:         scratch-1.4.0.6-use-fedora-squeak.patch
 Patch1:         scratch-1.4.0.6-desktopfile-semicolon.patch
 Patch2:         scratch-1.4.0.6-workaround-missing-pulse-plugin.patch
@@ -30,10 +27,6 @@ Requires:       scratch-squeak-cameraplugin, scratch-squeak-wedoplugin
 Requires:       scratch-media, scratch-projects
 Requires:       scratch-help, scratch-i18n
 
-# Fedora doesn't include mp3 support, so including the mp3 files is just
-# confusing. This matches what OLPC does for the XO: 
-# http://wiki.laptop.org/go/Scratch#Media_and_Sample_Project_Download_.28v12_and_earlier.29
-%define include_mp3_sounds 0
 
 %description
 Scratch is a programming language that makes it easy to create your own
@@ -152,10 +145,6 @@ English
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-
-%if ! %{include_mp3_sounds}
-find  Media/Sounds -name '*.mp3' -delete
-%endif
 
 
 
@@ -304,6 +293,9 @@ rm -rf %{buildroot}
 %{_datadir}/%{name}/locale
 
 %changelog
+* Fri Sep 14 2012 Matthew Miller <mattdm[@]mattdm.org> - 1.4.0.7-1
+- update to 1.4.0.7, which removes the mp3 issue thanks to upstream
+
 * Mon Sep 10 2012 Matthew Miller <mattdm[@]mattdm.org> - 1.4.0.6-15
 - work around possible missing pulse plugin for squeak
 
