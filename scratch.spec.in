@@ -25,7 +25,7 @@ BuildRequires: pango-devel > 1.20.5
 BuildRequires: glib2-devel > 2.20.1
 BuildRequires: libv4l-devel > 0.5.8
 
-BuildRequires: desktop-file-install
+BuildRequires: desktop-file-utils
 
 Requires:       scratch-image
 Requires:       scratch-squeak-scratchplugin, scratch-squeak-unicodeplugin
