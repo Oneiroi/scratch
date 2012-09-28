@@ -4,9 +4,14 @@ Release:        %{?dist}
 Summary:        Programming language learning environment for stories, games, music and art
 
 Group:          Development/Languages
-License:        GPLv2, MIT, and CC-BY-SA
+License:        GPLv2 and ASL 2.0 and MIT and CC-BY-SA
 URL:            http://scratch.mit.edu
 Source0:        http://download.scratch.mit.edu/%{name}-%{version}.src.tar.gz
+# The following source file is not used in the build process, but together
+# with Scratch.image and src/Scratch.changes comprises the preferred means
+# of modification -- see the included README. This file is under the MIT
+# and Apache 2.0 licenses.
+Source1:        http://ftp.squeak.org/2.0/SqueakV2.sources.gz
 Patch0:         scratch-1.4.0.6-use-fedora-squeak.patch
 Patch1:         scratch-1.4.0.6-desktopfile-semicolon.patch
 Patch2:         scratch-1.4.0.6-workaround-missing-pulse-plugin.patch
