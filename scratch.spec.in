@@ -161,7 +161,8 @@ make %{?_smp_mflags}
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot} 
+
 install -m 755 -d %{buildroot}%{_datadir}/%{name}
 #install -m 755 -d %{buildroot}%{_libdir}/%{name}/App
 install -m 644 Scratch.image %{buildroot}%{_datadir}/%{name}/
