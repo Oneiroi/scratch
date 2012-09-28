@@ -15,6 +15,7 @@ Source1:        http://ftp.squeak.org/2.0/SqueakV2.sources.gz
 Patch0:         scratch-1.4.0.6-use-fedora-squeak.patch
 Patch1:         scratch-1.4.0.6-desktopfile-semicolon.patch
 Patch2:         scratch-1.4.0.6-workaround-missing-pulse-plugin.patch
+Patch3:         scratch-1.4.0.6-no-xshm.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -152,7 +153,7 @@ English
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-
+%patch3 -p1
 
 
 %build
@@ -313,6 +314,10 @@ rm -rf %{buildroot}
 %{_datadir}/%{name}/locale
 
 %changelog
+* Fri Sep 28 2012 Matthew Miller <mattdm[@]mattdm.org> - 1.4.0.7-3
+- xshm extension has been reported to cause problems with newer squeak,
+  and definitely breaks remote use. Does not appear to give a noticeable
+  performance benefit, so let's not use it.
 * Fri Sep 28 2012 Matthew Miller <mattdm[@]mattdm.org> - 1.4.0.7-2
 - add source file and license info for squeak vm
 - use buildroot macro consistently
