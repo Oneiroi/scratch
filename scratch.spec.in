@@ -25,6 +25,8 @@ BuildRequires: pango-devel > 1.20.5
 BuildRequires: glib2-devel > 2.20.1
 BuildRequires: libv4l-devel > 0.5.8
 
+BuildRequires: desktop-file-install
+
 Requires:       scratch-image
 Requires:       scratch-squeak-scratchplugin, scratch-squeak-unicodeplugin
 Requires:       scratch-squeak-unicodeplugin
@@ -209,7 +211,7 @@ install -m 755 -d %{buildroot}%{_mandir}/man1
 install -m 644 src/man/scratch.1.gz %{buildroot}%{_mandir}/man1/
 
 install -m 755 -d %{buildroot}%{_datadir}/applications
-install -m 644 src/%{name}.desktop %{buildroot}%{_datadir}/applications/
+desktop-file-install --dir=%{buildroot}%{_datadir}/applications src/%{name}.desktop
 
 install -m 755 -d %{buildroot}%{_datadir}/icons/hicolor/48x48/apps
 install -m 644 src/icons/48x48/scratch.png %{buildroot}%{_datadir}/icons/hicolor/48x48/apps/
