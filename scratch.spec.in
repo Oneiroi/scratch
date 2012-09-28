@@ -225,6 +225,18 @@ install -m 644 src/icons/128x128/gnome-mime-application-x-scratch-project.png %{
 install -m 755 -d %{buildroot}%{_datadir}/mime/packages
 install -m 644 src/%{name}.xml %{buildroot}%{_datadir}/mime/packages/
 
+%post image
+/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+
+%postun image
+if [ $1 -eq 0 ] ; then
+    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+    /usr/bin/gtk-update-icon-cache -f %{_datadir}/icons/hicolor &>/dev/null || :
+fi
+
+%posttrans image
+/usr/bin/gtk-update-icon-cache -f %{_datadir}/icons/hicolor &>/dev/null || :
+
 
 %clean
 rm -rf %{buildroot}
