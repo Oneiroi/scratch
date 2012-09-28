@@ -313,6 +313,12 @@ rm -rf %{buildroot}
 %{_datadir}/%{name}/locale
 
 %changelog
+* Fri Sep 28 2012 Matthew Miller <mattdm[@]mattdm.org> - 1.4.0.7-2
+- add source file and license info for squeak vm
+- use buildroot macro consistently
+- add rpm scripts for icon cache refresh
+- install desktop file properly
+
 * Fri Sep 14 2012 Matthew Miller <mattdm[@]mattdm.org> - 1.4.0.7-1
 - update to 1.4.0.7, which removes the mp3 issue thanks to upstream
 
